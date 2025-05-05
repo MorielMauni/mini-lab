@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test10
+  labels:
+    app: test10
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: test10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: test10
+    spec:
+      containers:
+      - name: httpd
+        image: httpd:alpine3.19
+        command: ["/bin/bash", "-c"]
+        args: ["sleep 5; exit 1"]
+
